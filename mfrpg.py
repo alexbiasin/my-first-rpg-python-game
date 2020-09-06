@@ -94,7 +94,8 @@ Alex's first Python RPG Game: Try to escape, if you can!
 Commands:
   go [direction]
   get [item]
-  use [item] with [object] ''')
+  use [item] with [object]
+  quit ''')
 
 def showStatus():
     #print the player's current status
