@@ -2,7 +2,7 @@
 from typing import List
 import io
 import sys
-import aalib
+#import aalib
 import PIL.Image
 import random
 
@@ -13,83 +13,104 @@ def randomString(stringList):
     selected = random.choice(stringList)
     return selected
 
+def loadAscii(imagefile):
+    file_object  = open(imagefile, 'r')
+    return file_object.read()
+
 def asciiArt():
     asciiWidth = 56
     asciiHeight = 28
     global hallScreen
-    hallScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"hall.png").convert('L').resize(hallScreen.virtual_size)
-    hallScreen.put_image((0, 0), aimage)
+    hallScreen = loadAscii("hall.scr")
+    #hallScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"hall.png").convert('L').resize(hallScreen.virtual_size)
+    #hallScreen.put_image((0, 0), aimage)
     global hall2Screen
-    hall2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"hall2.png").convert('L').resize(hall2Screen.virtual_size)
-    hall2Screen.put_image((0, 0), aimage)
+    hall2Screen = loadAscii("hall2.scr")
+    #hall2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"hall2.png").convert('L').resize(hall2Screen.virtual_size)
+    #hall2Screen.put_image((0, 0), aimage)
     global kitchenScreen
-    kitchenScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"kitchen.png").convert('L').resize(kitchenScreen.virtual_size)
-    kitchenScreen.put_image((0, 0), aimage)
+    kitchenScreen = loadAscii("kitchen.scr")
+    #kitchenScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"kitchen.png").convert('L').resize(kitchenScreen.virtual_size)
+    #kitchenScreen.put_image((0, 0), aimage)
     global kitchen2Screen
-    kitchen2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"kitchen2.png").convert('L').resize(kitchen2Screen.virtual_size)
-    kitchen2Screen.put_image((0, 0), aimage)
+    kitchen2Screen = loadAscii("kitchen2.scr")
+    #kitchen2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"kitchen2.png").convert('L').resize(kitchen2Screen.virtual_size)
+    #kitchen2Screen.put_image((0, 0), aimage)
     global basementScreen
-    basementScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"basement.png").convert('L').resize(basementScreen.virtual_size)
-    basementScreen.put_image((0, 0), aimage)
+    basementScreen = loadAscii("basement.scr")
+    #basementScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"basement.png").convert('L').resize(basementScreen.virtual_size)
+    #basementScreen.put_image((0, 0), aimage)
     global basement2Screen
-    basement2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"basement2.png").convert('L').resize(basement2Screen.virtual_size)
-    basement2Screen.put_image((0, 0), aimage)
+    basement2Screen = loadAscii("basement2.scr")
+    #basement2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"basement2.png").convert('L').resize(basement2Screen.virtual_size)
+    #basement2Screen.put_image((0, 0), aimage)
     global diningScreen
-    diningScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"dining.png").convert('L').resize(diningScreen.virtual_size)
-    diningScreen.put_image((0, 0), aimage)
+    diningScreen = loadAscii("dining.scr")
+    #diningScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"dining.png").convert('L').resize(diningScreen.virtual_size)
+    #diningScreen.put_image((0, 0), aimage)
     global dining2Screen
-    dining2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"dining2.png").convert('L').resize(dining2Screen.virtual_size)
-    dining2Screen.put_image((0, 0), aimage)
+    dining2Screen = loadAscii("dining2.scr")
+    #dining2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"dining2.png").convert('L').resize(dining2Screen.virtual_size)
+    #dining2Screen.put_image((0, 0), aimage)
     global uphallScreen
-    uphallScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"uphall.png").convert('L').resize(uphallScreen.virtual_size)
-    uphallScreen.put_image((0, 0), aimage)
+    uphallScreen = loadAscii("uphall.scr")
+    #uphallScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"uphall.png").convert('L').resize(uphallScreen.virtual_size)
+    #uphallScreen.put_image((0, 0), aimage)
     global uphall2Screen
-    uphall2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"uphall2.png").convert('L').resize(uphall2Screen.virtual_size)
-    uphall2Screen.put_image((0, 0), aimage)
+    uphall2Screen = loadAscii("uphall2.scr")
+    #uphall2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"uphall2.png").convert('L').resize(uphall2Screen.virtual_size)
+    #uphall2Screen.put_image((0, 0), aimage)
     global bedroomScreen
-    bedroomScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"bedroom.png").convert('L').resize(bedroomScreen.virtual_size)
-    bedroomScreen.put_image((0, 0), aimage)
+    bedroomScreen = loadAscii("bedroom.scr")
+    #bedroomScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"bedroom.png").convert('L').resize(bedroomScreen.virtual_size)
+    #bedroomScreen.put_image((0, 0), aimage)
     global bedroom2Screen
-    bedroom2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"bedroom2.png").convert('L').resize(bedroom2Screen.virtual_size)
-    bedroom2Screen.put_image((0, 0), aimage)
+    bedroom2Screen = loadAscii("bedroom2.scr")
+    #bedroom2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"bedroom2.png").convert('L').resize(bedroom2Screen.virtual_size)
+    #bedroom2Screen.put_image((0, 0), aimage)
     global bathroomScreen
-    bathroomScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"bathroom.png").convert('L').resize(bathroomScreen.virtual_size)
-    bathroomScreen.put_image((0, 0), aimage)
+    bathroomScreen = loadAscii("bathroom.scr")
+    #bathroomScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"bathroom.png").convert('L').resize(bathroomScreen.virtual_size)
+    #bathroomScreen.put_image((0, 0), aimage)
     global bathroom2Screen
-    bathroom2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"bathroom2.png").convert('L').resize(bathroom2Screen.virtual_size)
-    bathroom2Screen.put_image((0, 0), aimage)
+    bathroom2Screen = loadAscii("bathroom2.scr")
+    #bathroom2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"bathroom2.png").convert('L').resize(bathroom2Screen.virtual_size)
+    #bathroom2Screen.put_image((0, 0), aimage)
     global corridorScreen
-    corridorScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"corridor.png").convert('L').resize(corridorScreen.virtual_size)
-    corridorScreen.put_image((0, 0), aimage)
+    corridorScreen = loadAscii("corridor.scr")
+    #corridorScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"corridor.png").convert('L').resize(corridorScreen.virtual_size)
+    #corridorScreen.put_image((0, 0), aimage)
     global corridor2Screen
-    corridor2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"corridor2.png").convert('L').resize(corridor2Screen.virtual_size)
-    corridor2Screen.put_image((0, 0), aimage)
+    corridor2Screen = loadAscii("corridor2.scr")
+    #corridor2Screen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"corridor2.png").convert('L').resize(corridor2Screen.virtual_size)
+    #corridor2Screen.put_image((0, 0), aimage)
     global gardenScreen
-    gardenScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
-    aimage = PIL.Image.open(r"garden.png").convert('L').resize(gardenScreen.virtual_size)
-    gardenScreen.put_image((0, 0), aimage)
+    gardenScreen = loadAscii("garden.scr")
+    #gardenScreen = aalib.AsciiScreen(width=asciiWidth, height=asciiHeight)
+    #aimage = PIL.Image.open(r"garden.png").convert('L').resize(gardenScreen.virtual_size)
+    #gardenScreen.put_image((0, 0), aimage)
 
 
 def showInstructions():
     #print a main menu and the commands
     print('''
-Alex's first Python RPG Game: Try to escape, if you can!
+Alex's first Python RPG Game (v1.1): Try to escape, if you can!
 ========
 Commands:
   go [direction]
@@ -104,48 +125,48 @@ def showStatus():
     
     if currentRoom == 'Hall' :
         if ('key' in inventory):
-            print (hall2Screen.render())
+            #print (hall2Screen.render())
+            print (hall2Screen)
         else:
-            print (hallScreen.render())    
+            print (hallScreen)    
     if currentRoom == 'Kitchen' :
         if ('item' in rooms[currentRoom]['items']) and ('monster' in rooms[currentRoom]['items']['item']):
-            print (kitchenScreen.render())
+            print (kitchenScreen)
         else:
-            print (kitchen2Screen.render())
+            print (kitchen2Screen)
     if currentRoom == 'Basement' :
         if ('wand' in inventory):
-            print (basement2Screen.render())
+            print (basement2Screen)
         else:
-            print (basementScreen.render())
+            print (basementScreen)
     if currentRoom == 'Dining Room' :
         if ('potion' in inventory):
-            print (dining2Screen.render())
+            print (dining2Screen)
         else:
-            print (diningScreen.render())
+            print (diningScreen)
     if currentRoom == 'Upstairs Hallway' :
         if ('cloak' in inventory):
-            print (uphall2Screen.render())
+            print (uphall2Screen)
         else:
-            print (uphallScreen.render())
+            print (uphallScreen)
     if currentRoom == 'Bedroom' :
         if ('book' in inventory):
-            print (bedroom2Screen.render())
+            print (bedroom2Screen)
         else:
-            print (bedroomScreen.render())
+            print (bedroomScreen)
     if currentRoom == 'Bathroom' :
         if ('spray' in inventory):
-            print (bathroom2Screen.render())
+            print (bathroom2Screen)
         else:
-            print (bathroomScreen.render())
+            print (bathroomScreen)
     if currentRoom == 'Corridor' :
         if ('locked door' in rooms[currentRoom]['items']['item']):
-            print (corridorScreen.render())
+            print (corridorScreen)
         else:
-            print (corridor2Screen.render())
+            print (corridor2Screen)
     if currentRoom == 'Garden' :
-        print (gardenScreen.render())
+        print (gardenScreen)
     
-
     #print the current inventory
     print('Inventory : ' + str(inventory))
     #print an item if there is one
@@ -314,7 +335,7 @@ while True:
             print('There is a monster! Luckily you have the cloak that keeps you safe.')
             #del rooms[currentRoom]['items']['item'] ## TODO: ver como eliminar solo el monster
         else:
-            print (kitchenScreen.render())
+            print (kitchenScreen)
             print('A monster has got you... GAME OVER!')
             break
   
