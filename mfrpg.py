@@ -3,7 +3,7 @@ from typing import List
 import io
 import sys
 #import aalib
-import PIL.Image
+#import PIL.Image
 import random
 
 # This is my first RPG Python game, based on the Raspberry-Pi begginers guide one
