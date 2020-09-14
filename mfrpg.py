@@ -1,4 +1,4 @@
-#!/bin/python3
+# ! / b i n / p y t h o n 3
 from typing import List
 import io
 import sys
