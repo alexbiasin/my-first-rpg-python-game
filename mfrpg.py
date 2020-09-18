@@ -1,12 +1,107 @@
-# ! / b i n / p y t h o n 3
 from typing import List
 import io
 import sys
-#import aalib
-#import PIL.Image
 import random
+from time import sleep
 
 # This is my first RPG Python game, based on the Raspberry-Pi begginers guide one
+
+def main():  # type: () -> None
+    #an inventory, which is initially empty
+    global inventory
+    global rooms
+    global currentRoom
+    
+    inventory = [] # type: List[str]
+    
+    # a dictionary linking a room to other rooms
+    rooms = {
+                'Hall' : {
+                    'directions' : {
+                       'south' : 'Kitchen',
+                       'east' : 'Dining Room',
+                       'stairs' : 'Upstairs Hallway'
+                      },
+                    'items' : {
+                       'item' : 'key'
+                      }
+                    },
+                'Kitchen' : {
+                    'directions' : {
+                       'north' : 'Hall'
+                      },
+                    'items' : {
+                       'item' : 'monster'
+                      }
+                    },
+                'Basement' : {
+                    'directions' : {
+                       'east' : 'Kitchen'
+                      },
+                    'items' : {
+                       'item' : 'wand'
+                      }
+                    },
+                'Dining Room' : {
+                    'directions' : {
+                       'west' : 'Hall',
+                       'south' : 'Corridor'
+                      },
+                    'items' : {
+                       'item' : 'potion'
+                      }
+                    },
+                'Upstairs Hallway' : {
+                    'directions' : {
+                        'east' : 'Bedroom',
+                        'west' : 'Bathroom',
+                        'stairs' : 'Hall'
+                      },
+                    'items' : {
+                        'item' : 'cloak'
+                      }
+                    },
+                'Bedroom' : {
+                    'directions' : {
+                        'west' : 'Upstairs Hallway'
+                      },
+                    'items' : {
+                        'item' : 'book'
+                      }
+                    },
+                'Bathroom' : {
+                    'directions' : {
+                        'east' : 'Upstairs Hallway'
+                      },
+                    'items' : {
+                        'item' : 'spray'
+                      }
+                    },
+                'Corridor' : {
+                    'directions' : {
+                       'north' : 'Dining Room',
+                       #'south' : 'Garden'
+                      },
+                    'items' : {
+                        'item' : 'locked door'
+                        }
+                    },
+                'Garden' : {
+                    'directions' : {
+                       'north' : 'Corridor'
+                      },
+                    'items' : {}
+                    }
+             }
+
+    #start the player in the Hall
+    currentRoom = 'Hall'
+
+    showInstructions()
+
+    asciiArt() # cargar las imagenes como ascii
+    
+    gameLoop()    
 
 # EJ: print (randomString(['uno','dos','tres','cuatro']))
 def randomString(stringList):
@@ -175,175 +270,93 @@ def showStatus():
     print("Possible moves: " + str(list(rooms[currentRoom]['directions'].keys()))) # se obtienen los "keys" del array
     print("---------------------------")
 
-#an inventory, which is initially empty
-inventory = [] # type: List[str]
-
-# a dictionary linking a room to other rooms
-rooms = {
-            'Hall' : {
-                'directions' : {
-                   'south' : 'Kitchen',
-                   'east' : 'Dining Room',
-                   'stairs' : 'Upstairs Hallway'
-                  },
-                'items' : {
-                   'item' : 'key'
-                  }
-                },
-            'Kitchen' : {
-                'directions' : {
-                   'north' : 'Hall'
-                  },
-                'items' : {
-                   'item' : 'monster'
-                  }
-                },
-            'Basement' : {
-                'directions' : {
-                   'east' : 'Kitchen'
-                  },
-                'items' : {
-                   'item' : 'wand'
-                  }
-                },
-            'Dining Room' : {
-                'directions' : {
-                   'west' : 'Hall',
-                   'south' : 'Corridor'
-                  },
-                'items' : {
-                   'item' : 'potion'
-                  }
-                },
-            'Upstairs Hallway' : {
-                'directions' : {
-                    'east' : 'Bedroom',
-                    'west' : 'Bathroom',
-                    'stairs' : 'Hall'
-                  },
-                'items' : {
-                    'item' : 'cloak'
-                  }
-                },
-            'Bedroom' : {
-                'directions' : {
-                    'west' : 'Upstairs Hallway'
-                  },
-                'items' : {
-                    'item' : 'book'
-                  }
-                },
-            'Bathroom' : {
-                'directions' : {
-                    'east' : 'Upstairs Hallway'
-                  },
-                'items' : {
-                    'item' : 'spray'
-                  }
-                },
-            'Corridor' : {
-                'directions' : {
-                   'north' : 'Dining Room',
-                   #'south' : 'Garden'
-                  },
-                'items' : {
-                    'item' : 'locked door'
-                    }
-                },
-            'Garden' : {
-                'directions' : {
-                   'north' : 'Corridor'
-                  },
-                'items' : {}
-                }
-         }
-
-#start the player in the Hall
-currentRoom = 'Hall'
-
-showInstructions()
-
-asciiArt() # cargar las imagenes como ascii
-
-#loop forever
-while True:
-    showStatus()
-
-    #get the player's next 'move'
-    #.split() breaks it up into an list array
-    #eg typing 'go east' would give the list:
-    #['go','east']
-    inputstr = ''
-    while inputstr == '':
-        # If you're using Python 2.7 (or anything earlier than Python 3), you need
-        # to change your input(...) command to use raw_input(...)
-        if sys.version_info[0] < 3:
-            inputstr = raw_input('> ')
-        else:
-            inputstr = input('> ')
+def gameLoop():
+    global rooms
+    global inventory
+    global currentRoom
     
-    print(" ")
-    move = inputstr.lower().split()
+    #loop forever
+    while True:
+        showStatus()
 
-    # Acciones
-    if (len(move)==1) and ( (move[0] == 'quit') or (move[0] == 'exit') ): #if they want to leave
-        print(randomString(['Bye bye!','Hope to see you again!','Don\'t give up next time.','We\'ll miss you...']))
-        quit()
-    if (move[0] == 'go') and (len(move)>1): #if they type 'go' first
-        #check that they are allowed wherever they want to go
-        if move[1] in rooms[currentRoom]['directions']:
-            #set the current room to the new room
-            currentRoom = rooms[currentRoom]['directions'][move[1]]
-        #there is no door (link) to the new room
-        else:
-            print(randomString(['You can\'t go that way!','Really? '+move[1]+'?','Consider getting a compass','I don\'t think going that way is the right way','Danger! Going that way is demential']))
-    elif move[0] == 'get' and (len(move)>1): #if they type 'get' first
-        #if the room contains an item, and the item is the one they want to get
-        if ("item" in rooms[currentRoom]['items']) and (move[1] in rooms[currentRoom]['items']['item']) and (move[1] == rooms[currentRoom]['items']['item']):
-            #add the item to their inventory
-            inventory += [move[1]]
-            #display a helpful message
-            print(randomString([move[1] + ' got!','Yeah! You have gotten the '+move[1],'The '+move[1]+', just what you\'ve been looking for','At last, the  glorious '+move[1] ]))
-            #delete the item from the room
-            del rooms[currentRoom]['items']['item']
-        #otherwise, if the item isn't there to get
-        else:
-            #tell them they can't get it
-            print(randomString(['Can\'t get ' + move[1] + '!',move[1]+' is not here','Nah!']))
-    elif (move[0] == 'use') and (len(move)>3) and (move[2] == 'with'): # if they type 'use' first
-        if (move[1] == 'spray') and (move[3] == 'monster'):
-            if ('item' in rooms[currentRoom]['items']) and ('monster' in rooms[currentRoom]['items']['item']) and ('spray' in inventory):
-                print('You have used the magic spray to kill the monster.')
-                del rooms[currentRoom]['items']['item'] ## TODO: ver como eliminar solo el monster
-                print('Behind tha monster there was a passage to the Basement.')
-                rooms[currentRoom]['directions']['west'] = 'Basement' # agregar nueva ruta
+        #get the player's next 'move'
+        #.split() breaks it up into an list array
+        #eg typing 'go east' would give the list:
+        #['go','east']
+        inputstr = ''
+        while inputstr == '':
+            # If you're using Python 2.7 (or anything earlier than Python 3), you need
+            # to change your input(...) command to use raw_input(...)
+            if sys.version_info[0] < 3:
+                inputstr = raw_input('> ')
             else:
-                print(randomString(['Mmm, think again.','You are half way there, keep up!','Yeeeeah... nope!']))
-        elif (currentRoom == 'Corridor') and ('key' in inventory) and (move[1] == 'key') and (move[3] == 'locked' or move[3] == 'door'): # al abrir la puerta, se crea una salida
-            rooms[currentRoom]['directions']['south'] = 'Garden' # agregar nueva ruta
-            rooms[currentRoom]['items']['item'] = 'opened door'
-            print('You have opened the door.')
-        else:
-            #tell them they can't use it
-            print(randomString(['Can\'t use ' + move[1] + ' with ' + move[3] + '!','I don\'t think the '+move[1]+' is meant to be used with the '+move[3],'...'+move[1]+' with '+move[3]+' does not compute.']))
-    else:
-        print(randomString(['What?','Think again!','Remember the three beautiful commands?','You can do better','You think?']))
+                inputstr = input('> ')
         
-    # player loses if they enter a room with a monster, unless they have a cloak
-    if ('item' in rooms[currentRoom]['items']) and ('monster' in rooms[currentRoom]['items']['item']):
-        if 'cloak' in inventory:
-            print('There is a monster! Luckily you have the cloak that keeps you safe.')
-            #del rooms[currentRoom]['items']['item'] ## TODO: ver como eliminar solo el monster
+        print(" ")
+        move = inputstr.lower().split()
+
+        # Acciones
+        if (len(move)==1) and ( (move[0] == 'quit') or (move[0] == 'exit') ): #if they want to leave
+            print(randomString(['Bye bye!','Hope to see you again!','Don\'t give up next time.','We\'ll miss you...']))
+            quit()
+        if (move[0] == 'go') and (len(move)>1): #if they type 'go' first
+            #check that they are allowed wherever they want to go
+            if move[1] in rooms[currentRoom]['directions']:
+                #set the current room to the new room
+                currentRoom = rooms[currentRoom]['directions'][move[1]]
+            #there is no door (link) to the new room
+            else:
+                print(randomString(['You can\'t go that way!','Really? '+move[1]+'?','Consider getting a compass','I don\'t think going that way is the right way','Danger! Going that way is demential']))
+        elif move[0] == 'get' and (len(move)>1): #if they type 'get' first
+            #if the room contains an item, and the item is the one they want to get
+            if ("item" in rooms[currentRoom]['items']) and (move[1] in rooms[currentRoom]['items']['item']) and (move[1] == rooms[currentRoom]['items']['item']):
+                #add the item to their inventory
+                inventory += [move[1]]
+                #display a helpful message
+                print(randomString([move[1] + ' got!','Yeah! You have gotten the '+move[1],'The '+move[1]+', just what you\'ve been looking for','At last, the  glorious '+move[1] ]))
+                #delete the item from the room
+                del rooms[currentRoom]['items']['item']
+            #otherwise, if the item isn't there to get
+            else:
+                #tell them they can't get it
+                print(randomString(['Can\'t get ' + move[1] + '!',move[1]+' is not here','Nah!']))
+        elif (move[0] == 'use') and (len(move)>3) and (move[2] == 'with'): # if they type 'use' first
+            if (move[1] == 'spray') and (move[3] == 'monster'):
+                if ('item' in rooms[currentRoom]['items']) and ('monster' in rooms[currentRoom]['items']['item']) and ('spray' in inventory):
+                    print('You have used the magic spray to kill the monster.')
+                    del rooms[currentRoom]['items']['item'] ## TODO: ver como eliminar solo el monster
+                    print('Behind tha monster there was a passage to the Basement.')
+                    rooms[currentRoom]['directions']['west'] = 'Basement' # agregar nueva ruta
+                else:
+                    print(randomString(['Mmm, think again.','You are half way there, keep up!','Yeeeeah... nope!']))
+            elif (currentRoom == 'Corridor') and ('key' in inventory) and (move[1] == 'key') and (move[3] == 'locked' or move[3] == 'door'): # al abrir la puerta, se crea una salida
+                rooms[currentRoom]['directions']['south'] = 'Garden' # agregar nueva ruta
+                rooms[currentRoom]['items']['item'] = 'opened door'
+                print('You have opened the door.')
+            else:
+                #tell them they can't use it
+                print(randomString(['Can\'t use ' + move[1] + ' with ' + move[3] + '!','I don\'t think the '+move[1]+' is meant to be used with the '+move[3],'...'+move[1]+' with '+move[3]+' does not compute.']))
         else:
-            print (kitchenScreen)
-            print('A monster has got you... GAME OVER!')
-            break
-  
-    # player wins if they get to the garden with a key and a potion
-    if (currentRoom == 'Garden'):
-        if ('wand' in inventory) and ('potion' in inventory) and ('book' in inventory):
-            print('You escaped the house with all the items... YOU WIN!')
-            break
-        else:
-            print('Before going out, you must carry your book, potion and wand!')
-  
+            print(randomString(['What?','Think again!','Remember the three beautiful commands?','You can do better','You think?']))
+            
+        # player loses if they enter a room with a monster, unless they have a cloak
+        if ('item' in rooms[currentRoom]['items']) and ('monster' in rooms[currentRoom]['items']['item']):
+            if 'cloak' in inventory:
+                print('There is a monster! Luckily you have the cloak that keeps you safe.')
+                #del rooms[currentRoom]['items']['item'] ## TODO: ver como eliminar solo el monster
+            else:
+                print (kitchenScreen)
+                print('A monster has got you... GAME OVER!')
+                break
+      
+        # player wins if they get to the garden with a key and a potion
+        if (currentRoom == 'Garden'):
+            if ('wand' in inventory) and ('potion' in inventory) and ('book' in inventory):
+                print('You escaped the house with all the items... YOU WIN!')
+                sleep(5)
+                break
+            else:
+                print('Before going out, you must carry your book, potion and wand!')
+      
+if __name__ == "__main__":
+    main()
